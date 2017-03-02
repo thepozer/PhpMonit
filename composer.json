@@ -1,0 +1,25 @@
+{
+    "name": "thepozer/base-slim",
+    "description": "My skeleton for slim framework v3 web site/service",
+    "type": "project",
+    "require": {
+        "slim/slim": "~3.0",
+        "j4mie/paris": "~1.0",
+        "guzzlehttp/psr7": "~1.0",
+        "phpseclib/phpseclib": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+			"Tools\\": "models/tools/",
+			"": "models/"
+		}
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Didier Prolhac",
+            "email": "dev@thepozer.net"
+        }
+    ],
+    "minimum-stability": "stable"
+}
