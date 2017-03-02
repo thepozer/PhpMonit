@@ -1,0 +1,43 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>PhpMonit - Monitoring de serveur en PHP</title>
+    <link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="public/css/bootstrap-theme.min.css">
+    <style>
+        h2, h3, div.footer {
+            text-align: center;
+        }
+    </style>
+    <!--[if lt IE 9]>
+        <script src="public/js/html5shiv.min.js"></script>
+        <script src="public/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nb-admin-afersite" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">PhpMonit</a>
+                </div>
+                <div class="collapse navbar-collapse" id="nb-admin-afersite">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">Serveurs</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <?php $this->includeView(); ?>
+    </div>
+    <script type="text/javascript" src="public/js/jquery.min.js"></script>
+    <script type="text/javascript" src="public/js/bootstrap.min.js"></script>
+</body>
+</html>
