@@ -1,5 +1,26 @@
 <div class="row">
     <div class="col-sm-offset-3 col-sm-6">
-        <h1>Coucou</h1>
+        <div class="well">
+            Date du status : <?= $this->arStatus['#General']['date'] ?>
+        </div>
+<?php foreach($this->arStatus as $sHostName => $arHostStatus) : 
+    $sHtmlName = strtr($sHostName, ['.' => '-']);
+    if ($sHostName !== '#General') : ?>
+        <div class="panel <?= ($arHostStatus['#status'] === 'OK') ? 'panel-success' : 'panel-danger' ?>">
+            <div class="panel-heading" role="tab" id="head-<?= $sHtmlName ?>">
+                <a role="button" data-toggle="collapse" data-parent="#hosts" href="#bloc-<?= $sHtmlName ?>" aria-expanded="<?= ($arHostStatus['#status'] === 'OK') ? 'false' : 'true' ?>" aria-controls="bloc-<?= $sHtmlName ?>">
+                    Machine : <?= $sHostName ?>
+                </a>
+            </div>
+            <ul class="list-group collapse <?= ($arHostStatus['#status'] === 'OK') ? '' : 'in' ?>" id="bloc-<?= $sHtmlName ?>">
+<?php foreach($arHostStatus as $sService => $arService): 
+    if ($sService !== '#status'): ?>
+                <li class="list-group-item <?= ($arService['status'] === 'OK') ? 'list-group-item-success' : ' list-group-item-danger' ?>">
+                    <?= $sService ?> : <?= $arService['status'] ?> (<?= $arService['value'] ?>) - <?= $arService['human'] ?>
+                </li>
+<?php endif; endforeach; ?>
+            </ul>
+        </div>
+<?php endif; endforeach; ?>
     </div>
 </div>
