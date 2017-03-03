@@ -9,7 +9,7 @@ $oGlobalApp->get('/', function (Request $oRequest, Response $oResponse, $args) {
     
     $this->view->arStatus = json_decode(file_get_contents($sStatusFile), true);
     
-    return $this->view->render($oResponse, 'index');
+    return $this->view->render($oResponse->withHeader('Refresh', '300'), 'index');
 });
 
 $oGlobalApp->get('/config', function (Request $oRequest, Response $oResponse, $args) use ($arServers) {
