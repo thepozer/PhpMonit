@@ -16,11 +16,11 @@ if ($bDevMode) {
     * @param String $sMessage Message à enregistrer
     */
 function debug ($sMessage) {
-    global $oLog, $bDevMode;
+    global $oLog, $bDebugEcho;
     
     $oLog->debug($sMessage);
-    if ($bDevMode) {
-        echo "{$sMessage}\n";
+    if ($bDebugEcho) {
+        echo "Debug : {$sMessage}\n";
     }
 }
 
@@ -31,7 +31,10 @@ function debug ($sMessage) {
     * @param String $sMessage Message à enregistrer
     */
 function error ($sMessage) {
-    global $oLog;
+    global $oLog, $bDebugEcho;
     
     $oLog->error($sMessage);
+    if ($bDebugEcho) {
+        echo "Error : {$sMessage}\n";
+    }
 }
