@@ -10,7 +10,7 @@ $arServers = [
         ],
         'services' => [
             'uptime' => ['minimal' => 3600],
-//            'load' => [],
+            'load' => ['maximal' => [1, 1, 1]],
             'mem' => ['mem_minimal' => '10', 'swap_minimal' => '95', 'need_swap' => false],
 //            'disk' => [],
 //            'disk-inode' => [],
@@ -26,7 +26,7 @@ $arServers = [
         ],
         'services' => [
             'uptime' => ['minimal' => 3600],
-//            'load' => [],
+            'load' => ['maximal' => [1, 1, 1]],
             'mem' => ['mem_minimal' => '10', 'swap_minimal' => '95', 'need_swap' => false],
 //            'disk' => [],
 //            'disk-inode' => [],

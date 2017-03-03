@@ -30,7 +30,7 @@ class CheckMem {
         $sCmd = 'cat /proc/meminfo';
 
         $sRet = $oHost->executeRemoteCmd($sCmd);
-        //debug(__METHOD__ . " - sRet : '{$sRet}'");
+        debug(__METHOD__ . " - sRet : '{$sRet}'");
 
         if ($sRet) {
             $arElements = ['MemTotal', 'MemFree', 'Buffers', 'Cached', 'SwapTotal', 'SwapFree'];
@@ -42,12 +42,12 @@ class CheckMem {
                     $arInfo[$arItems[0]] = $this->parseUnit(trim($arItems[1]));
                 }
             }
-            //print_r($arInfo);
-
+            debug(__METHOD__ . " - arInfo : " . print_r($arInfo, true));
+            
             // Check Mem
             $iMemLimit = floor($arInfo['MemTotal'] * ($arParams['mem_minimal'] / 100));
             $iMemFree = $arInfo['MemFree'] + $arInfo['Buffers'] + $arInfo['Cached'];
-            $arRet['mem']['status'] = (($iMemFree >= $iMemLimit) ? 'Ok' : 'KO');
+            $arRet['mem']['status'] = (($iMemFree >= $iMemLimit) ? 'OK' : 'KO');
             $arRet['mem']['value'] = $iMemFree;
             $arRet['mem']['human'] = "Memory Free : {$iMemFree} (" . floor($iMemFree / ($arInfo['MemTotal'] / 100)) . '%)';
 
@@ -55,11 +55,11 @@ class CheckMem {
             if ($arInfo['SwapTotal'] > 0) {
                 $iSwapLimit = floor($arInfo['SwapTotal'] * ($arParams['swap_minimal'] / 100));
                 $iSwapFree = $arInfo['SwapFree'];
-                $arRet['swap']['status'] = (($iSwapFree >= $iSwapLimit) ? 'Ok' : 'KO');
+                $arRet['swap']['status'] = (($iSwapFree >= $iSwapLimit) ? 'OK' : 'KO');
                 $arRet['swap']['value'] = $iSwapFree;
                 $arRet['swap']['human'] = "Swap Free : {$iSwapFree} (" . floor($iSwapFree / ($arInfo['SwapTotal'] / 100)) . '%)';
             } else {
-                $arRet['swap']['status'] = ((!$arParams['need_swap']) ? 'Ok' : 'KO');
+                $arRet['swap']['status'] = ((!$arParams['need_swap']) ? 'OK' : 'KO');
                 $arRet['swap']['value'] = 0;
                 $arRet['swap']['human'] = "No swap activated";
             }

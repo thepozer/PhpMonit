@@ -35,7 +35,7 @@ class CheckUptime {
             $oDate = $d2->diff($d1);
             //debug(__METHOD__ . " - oDate : " . print_r($oDate, true));
 
-            $arRet['status'] = (($iDelta >= $arParams['minimal']) ? 'Ok' : 'KO');
+            $arRet['status'] = (($iDelta >= $arParams['minimal']) ? 'OK' : 'KO');
             $arRet['value'] = $iDelta;
             $arRet['human'] = $oDate->format('%a j %H h %M m %S s');
         }
