@@ -1,15 +1,27 @@
 <div class="row">
-    <div class="col-sm-offset-3 col-sm-6">
-        <div class="well">
-            Date du status : <?= $this->arStatus['#General']['date'] ?><br />
-            Date de génération : <?= date('Y-m-d H:i:s'); ?>
+    <div class="col-sm-6 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="head-notif">
+                <a role="button" data-toggle="collapse" href="#bloc-notif" aria-expanded="false" aria-controls="bloc-notif">
+                    Notifications du jour
+                </a>
+            </div>
+            <ul class="list-group collapse <?= (count($this->arNotifs) === 0) ? '' : 'in' ?>" id="bloc-notif">
+<?php foreach($this->arNotifs as $arNotif): ?>
+                <li class="list-group-item list-group-item-danger">
+                    <?= $arNotif['host'] ?> - <?= $arNotif['date'] ?> - <?= $arNotif['name'] ?> <?= $arNotif['status'] ?> (<?= $arNotif['value'] ?>) <br /> <?= $arNotif['human'] ?>
+                </li>
+<?php endforeach; ?>
+            </ul>
         </div>
+    </div>
 <?php foreach($this->arStatus as $sHostName => $arHostStatus) : 
     $sHtmlName = strtr($sHostName, ['.' => '-']);
     if ($sHostName !== '#General') : ?>
-        <div class="panel <?= ($arHostStatus['#status'] === 'OK') ? 'panel-success' : 'panel-danger' ?>">
+    <div class="col-sm-6 col-xs-12">
+       <div class="panel <?= ($arHostStatus['#status'] === 'OK') ? 'panel-success' : 'panel-danger' ?>">
             <div class="panel-heading" role="tab" id="head-<?= $sHtmlName ?>">
-                <a role="button" data-toggle="collapse" data-parent="#hosts" href="#bloc-<?= $sHtmlName ?>" aria-expanded="<?= ($arHostStatus['#status'] === 'OK') ? 'false' : 'true' ?>" aria-controls="bloc-<?= $sHtmlName ?>">
+                <a role="button" data-toggle="collapse" href="#bloc-<?= $sHtmlName ?>" aria-expanded="<?= ($arHostStatus['#status'] === 'OK') ? 'false' : 'true' ?>" aria-controls="bloc-<?= $sHtmlName ?>">
                     Machine : <?= $sHostName ?>
                 </a>
             </div>
@@ -22,6 +34,10 @@
 <?php endif; endforeach; ?>
             </ul>
         </div>
-<?php endif; endforeach; ?>
     </div>
+<?php endif; endforeach; ?>
 </div>
+<p class="text-center">
+    Date du vérification : <?= $this->arStatus['#General']['date'] ?><br />
+    Date de l'affichage : <?= date('Y-m-d H:i:s'); ?>
+</p>

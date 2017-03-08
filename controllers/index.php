@@ -6,8 +6,11 @@ require 'data/servers.php';
 
 $oGlobalApp->get('/', function (Request $oRequest, Response $oResponse, $args) {
     $sStatusFile = 'data/status.json';
+    $sNotifFile = 'data/notif.json';
     
     $this->view->arStatus = json_decode(file_get_contents($sStatusFile), true);
+    //debug("get / - Content sNotifFile({$sNotifFile}) : " . file_get_contents($sNotifFile));
+    $this->view->arNotifs = json_decode(file_get_contents($sNotifFile), true);
     
     return $this->view->render($oResponse->withHeader('Refresh', '300'), 'index');
 });
