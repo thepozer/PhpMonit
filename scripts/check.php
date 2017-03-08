@@ -32,6 +32,7 @@ foreach($arServers as $sHostName => $arServer) {
                     $arResults[$sHostName]['#status'] = 'KO' ;
                     
                     $arNotif = $arService;
+                    $arNotif['name'] = $sServiceName;
                     $arNotif['date'] = date('Y-m-d H:i:s', $iCurrTime);
                     $arNotif['host'] = $arServer['host'];
                     $arNotifications[] = $arNotif;
@@ -44,23 +45,26 @@ foreach($arServers as $sHostName => $arServer) {
     }
 }
 
-debug("sCheckDirName  : '{$sCheckDirName}'");
-debug("sCheckFileName : '{$sCheckFileName}'");
-
 if (!is_dir($sCheckDirName)) {
     mkdir($sCheckDirName, 0777, true);
 }
 file_put_contents($sCheckFileName, json_encode($arResults));
 file_put_contents('data/status.json', json_encode($arResults));
 
+if (count($arNotifications) > 0) {
+    debug("sNotifDirName  : '{$sNotifDirName}'");
+    debug("sNotifFileName : '{$sNotifFileName}'");
 
-debug("sNotifDirName  : '{$sNotifDirName}'");
-debug("sNotifFileName : '{$sNotifFileName}'");
-
-if (!is_dir($sNotifDirName)) {
-    mkdir($sNotifDirName, 0777, true);
+    if (!is_dir($sNotifDirName)) {
+        mkdir($sNotifDirName, 0777, true);
+    }
+    
+    $arFullNotifications = (file_exists($sNotifFileName)) ? json_decode(file_get_contents($sNotifFileName), true) : [];
+    debug("check.php : Full Notifications Before : " . print_r($arFullNotifications, true));
+    foreach($arNotifications as $arNotif) {
+        array_unshift($arFullNotifications, $arNotif);
+    }
+    debug("check.php : Full Notifications After  : " . print_r($arFullNotifications, true));
+    file_put_contents($sNotifFileName, json_encode($arFullNotifications));
+    file_put_contents('data/notif.json', json_encode($arFullNotifications));
 }
-$arFullNotifications = (file_exists($sNotifFileName)) ? json_decode(file_get_contents($sNotifFileName), true) : [];
-$arFullNotifications += $arNotifications;
-file_put_contents($sNotifFileName, json_encode($arFullNotifications));
-file_put_contents('data/notif.json', json_encode($arFullNotifications));
