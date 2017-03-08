@@ -30,7 +30,7 @@ class CheckMem {
         $sCmd = 'cat /proc/meminfo';
 
         $sRet = $oHost->executeRemoteCmd($sCmd);
-        debug(__METHOD__ . " - sRet : '{$sRet}'");
+        //debug(__METHOD__ . " - sRet : '{$sRet}'");
 
         if ($sRet) {
             $arElements = ['MemTotal', 'MemFree', 'Buffers', 'Cached', 'SwapTotal', 'SwapFree'];
@@ -42,7 +42,7 @@ class CheckMem {
                     $arInfo[$arItems[0]] = $this->parseUnit(trim($arItems[1]));
                 }
             }
-            debug(__METHOD__ . " - arInfo : " . print_r($arInfo, true));
+            //debug(__METHOD__ . " - arInfo : " . print_r($arInfo, true));
             
             // Check Mem
             $iMemLimit = floor($arInfo['MemTotal'] * ($arParams['mem_minimal'] / 100));

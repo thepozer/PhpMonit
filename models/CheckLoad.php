@@ -22,11 +22,11 @@ class CheckLoad {
         $sCmd = 'cat /proc/loadavg';
 
         $sRet = $oHost->executeRemoteCmd($sCmd);
-        debug(__METHOD__ . " - sRet : '{$sRet}'");
+        //debug(__METHOD__ . " - sRet : '{$sRet}'");
 
         if ($sRet) {
             $arTime = explode(' ', $sRet, 4);
-            debug(__METHOD__ . " - arTime : " . print_r($arTime, true));
+            //debug(__METHOD__ . " - arTime : " . print_r($arTime, true));
             list($fLoad1m, $fLoad5m, $fLoad15m, ) = $arTime;
 
             $arRet['status'] = (($fLoad1m < $arParams['maximal'][0] && $fLoad5m < $arParams['maximal'][1] && $fLoad15m < $arParams['maximal'][2]) ? 'OK' : 'KO');
