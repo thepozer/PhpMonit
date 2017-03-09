@@ -1,11 +1,9 @@
 <?php
 require '_bootstrap.php';
 
-require 'data/servers.php';
-
 $iCurrTime = time();
 
-$sCheckDirName = 'data/checks/' . date('Y', $iCurrTime) . '/' . date('m', $iCurrTime) . '/' . date('d', $iCurrTime) . '/' . date('H', $iCurrTime);
+$sCheckDirName = 'data/status/' . date('Y', $iCurrTime) . '/' . date('m', $iCurrTime) . '/' . date('d', $iCurrTime) . '/' . date('H', $iCurrTime);
 $sCheckFileName = $sCheckDirName . '/status-' . date('Y-m-d-Hi', $iCurrTime) . '.json';
 $sNotifDirName = 'data/notifs/' . date('Y', $iCurrTime);
 $sNotifFileName = $sNotifDirName . '/notif-' . date('Y-m-d', $iCurrTime) . '.json';
@@ -51,7 +49,7 @@ if (!is_dir($sCheckDirName)) {
 file_put_contents($sCheckFileName, json_encode($arResults));
 file_put_contents('data/status.json', json_encode($arResults));
 
-if (count($arNotifications) > 0) {
+if (count($arNotifications) > 0 || !file_exists($sNotifFileName)) {
     debug("sNotifDirName  : '{$sNotifDirName}'");
     debug("sNotifFileName : '{$sNotifFileName}'");
 
@@ -66,5 +64,5 @@ if (count($arNotifications) > 0) {
     }
     debug("check.php : Full Notifications After  : " . print_r($arFullNotifications, true));
     file_put_contents($sNotifFileName, json_encode($arFullNotifications));
-    file_put_contents('data/notif.json', json_encode($arFullNotifications));
+    file_put_contents('data/notifs.json', json_encode($arFullNotifications));
 }

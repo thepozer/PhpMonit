@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="head-notif">
                 <a role="button" data-toggle="collapse" href="#bloc-notif" aria-expanded="false" aria-controls="bloc-notif">
-                    Notifications du jour
+                    Notifications du jour : <?= count($this->arNotifs) ?>
                 </a>
             </div>
             <ul class="list-group collapse <?= (count($this->arNotifs) === 0) ? '' : 'in' ?>" id="bloc-notif">

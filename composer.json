@@ -4,7 +4,6 @@
     "type": "project",
     "require": {
         "slim/slim": "~3.0",
-        "j4mie/paris": "~1.0",
         "guzzlehttp/psr7": "~1.0",
         "phpseclib/phpseclib": "~2.0"
     },
