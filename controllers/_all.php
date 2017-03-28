@@ -12,11 +12,13 @@ require_once 'controllers/_log.php';
 
 // Create container
 $oContainer = new \Slim\Container();
+
 // Register component on container
 $oContainer['view'] = function ($c) {
     return new \Tools\View\SimpleView('views/');
 };
 $oContainer['log'] = $oLog;
+$oContainer['arServers'] = $arServers;
 
 /**
  * Charge le fichier de configuration de dev si il existe, celui de prod sinon
