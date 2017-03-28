@@ -1,0 +1,39 @@
+<div class="row">
+<?php foreach($this->arServers as $sHostName => $arHostConfig) : 
+    $sHtmlName = strtr($sHostName, ['.' => '-']); ?>
+    <div class="col-sm-6 col-xs-12">
+       <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="head-<?= $sHtmlName ?>">
+                <a role="button" data-toggle="collapse" href="#bloc-<?= $sHtmlName ?>" aria-expanded="true" aria-controls="bloc-<?= $sHtmlName ?>">
+                    Machine : <?= $sHostName ?>
+                </a>
+            </div>
+            <ul class="list-group collapse in" id="bloc-<?= $sHtmlName ?>">
+                <li class="list-group-item list-group-item-default">Host : <?= $arHostConfig['host']; ?></li>
+                <li class="list-group-item list-group-item-default">Type : <?= $arHostConfig['type']; ?></li>
+<?php if (isset($arHostConfig['ssh'])) : ?>
+                <li class="list-group-item list-group-item-default">Ssh - Login : <?= $arHostConfig['ssh']['login']; ?> - Private key : <?= basename($arHostConfig['ssh']['private_key']); ?></li>
+<?php endif; ?>
+<?php foreach($arHostConfig['services'] as $sService => $arParams): 
+    if ($sService == 'disk' || $sService == 'diskInode') : ?>
+                <li class="list-group-item list-group-item-default">
+                    <?= $sService ?> - Mount Points : <?= implode(', ', $arParams['mounts']); ?><br />
+                    Parameters : <?php foreach($arParams['params'] as $sName => $sValue): echo "{$sName} : {$sValue}<br />"; endforeach; ?>
+                </li>
+<?php elseif ($sService == 'load') : ?>
+                <li class="list-group-item list-group-item-default">
+                    <?= $sService ?> - Parameters : <?php foreach($arParams as $sName => $sValue): echo "{$sName} : " . implode(', ', $sValue) . "<br />"; endforeach; ?>
+                </li>
+<?php else: ?>
+                <li class="list-group-item list-group-item-default">
+                    <?= $sService ?> - Parameters : <?php foreach($arParams as $sName => $sValue): echo "{$sName} : {$sValue}<br />"; endforeach; ?>
+                </li>
+<?php endif; endforeach; ?>
+            </ul>
+        </div>
+    </div>
+<?php endforeach; ?>
+</div>
+<p class="text-center">
+    Date de l'affichage : <?= date('Y-m-d H:i:s'); ?>
+</p>

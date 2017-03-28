@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-sm-offset-1 col-sm-10 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                Notifications de <?= pathinfo($this->sFileNow, PATHINFO_FILENAME); ?> : <?= count($this->arNotifs) ?>
+            </div>
+            <ul class="list-group collapse in">
+                <li class="list-group-item list-group-item-default">
+                    <ul class="pager">
+                        <li class="previous <?= ($this->sFilePrev) ? '' : 'disabled' ?>">
+                            <a href="<?= ($this->sFilePrev) ? "./history?f={$this->sFilePrev}" : '#' ; ?>"><span aria-hidden="true">&larr;</span> Précédent</a>
+                        </li>
+                        <li class="next <?= ($this->sFileNext) ? '' : 'disabled' ?>">
+                            <a href="<?= ($this->sFileNext) ? "./history?f={$this->sFileNext}" : '#' ; ?>">Suivant <span aria-hidden="true">&rarr;</span></a>
+                        </li>
+                    </ul>
+                </li>
+<?php foreach($this->arNotifs as $arNotif): ?>
+                <li class="list-group-item list-group-item-danger">
+                    <?= $arNotif['host'] ?> - <?= $arNotif['date'] ?> - <?= $arNotif['name'] ?> <?= $arNotif['status'] ?> (<?= $arNotif['value'] ?>) <br /> <?= $arNotif['human'] ?>
+                </li>
+<?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+</div>
+<p class="text-center">
+    Date de l'affichage : <?= date('Y-m-d H:i:s'); ?>
+</p>
