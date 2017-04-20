@@ -21,6 +21,10 @@ class Host {
         return self::OS_UNKNOWN;
     }
 
+    public function getHostname() {
+        return $this->sHostname;
+    }
+
     public static function getInstance($sName, $arServer) {
         $oHost = null;
 
@@ -34,9 +38,9 @@ class Host {
 
     public function executeCmd($sCmd) {
         
-        exec($sCmd, $arRetOut);
+        $sLastLine = exec($sCmd, $arRetOut, $iRetCode);
 
-        return implode('\n', $arRetOut);
+        return ['last_line' => $sLastLine, 'text' => implode("\n", $arRetOut), 'code' => $iRetCode];
     }
     
     public function setSshAuthInfo($sLogin, $sPrivateFileKey, $sPublicFileKey) {
