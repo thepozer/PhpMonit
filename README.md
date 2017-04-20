@@ -10,6 +10,10 @@ It can check on Unix host :
   * Disk Usage
   * Disk Inode Usage
 
+And for all type of host :
+  * Ping from current server
+  * Open ports on the host
+
 ## Installation
 
 Copy source into a directory : `cd /home/http/PhpMonit`
@@ -42,6 +46,7 @@ $arServers = [
             'mem' => ['mem_minimal' => '10', 'swap_minimal' => '95', 'need_swap' => false],
             'disk' => [mounts=> ['/'], params => ['minimal' => 10]],
             'diskInode' => [mounts=> ['/'], params => ['minimal' => 10]],
+            'port' => ['list' => [22, 25, 80, 443], 'needed' => [22, 80, 443]],
         ],
     ]
 ];
@@ -50,11 +55,13 @@ $arServers = [
 
 ## List of services
 
+### ping
 ### uptime
 ### load
 ### mem
 ### disk
 ### diskInode
+### port
 
 ## TODO
 
