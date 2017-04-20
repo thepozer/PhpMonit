@@ -24,7 +24,7 @@ class CheckDisk {
         $sCmd = 'df -B1 --sync ' . implode (' ', $arMountPoint);
 
         $sRet = $oHost->executeRemoteCmd($sCmd);
-        debug(__METHOD__ . " - sRet : '{$sRet}'");
+//debug(__METHOD__ . " - sRet : '{$sRet}'");
 
         if ($sRet) {
             $arLines = explode ("\n", $sRet);
@@ -35,7 +35,7 @@ class CheckDisk {
                     
                     $fPercentSize  = $iSizeAvail / $iSizeTotal * 100;
                     $sDiskName = 'disk: ' . $sMount;
-                    debug(__METHOD__ . " - sDiskName : '{$sDiskName}'");
+//debug(__METHOD__ . " - sDiskName : '{$sDiskName}'");
                     
                     $arRet[$sDiskName]  = $arDefaultRet;
                     $arRet[$sDiskName]['status'] = ($fPercentSize > $arParams['minimal']) ? 'OK' : 'KO' ;
