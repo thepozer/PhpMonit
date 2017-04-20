@@ -15,6 +15,7 @@ $arServers = [
             'mem' => ['mem_minimal' => '10', 'swap_minimal' => '95', 'need_swap' => false],
             'disk' => [mounts=> ['/'], params => ['minimal' => 10]],
             'diskInode' => [mounts=> ['/'], params => ['minimal' => 10]],
+            'port' => ['list' => [22, 25, 80, 443], 'needed' => [22, 80, 443]],
         ],
     ]
 ];
