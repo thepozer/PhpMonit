@@ -64,8 +64,14 @@ foreach($arServers as $sHostName => $arServer) {
 if (!is_dir($sCheckDirName)) {
     mkdir($sCheckDirName, 0777, true);
 }
-file_put_contents($sCheckFileName, json_encode($arResults));
-file_put_contents('data/status.json', json_encode($arResults));
+//debug("check.php : Status  : " . print_r($arResults, true));
+$sJsonData = json_encode($arResults);
+//debug("check.php : JSON encode (" . json_last_error() . ") : " . json_last_error_msg());
+//debug("check.php : JSON data :\n" . $sJsonData);
+file_put_contents($sCheckFileName, $sJsonData);
+//debug("check.php : Write Status timed file : Ok");
+file_put_contents('data/status.json', $sJsonData);
+//debug("check.php : Write Status current file : Ok");
 
 if (count($arNotifications) > 0 || !file_exists($sNotifFileName)) {
 //debug("sNotifDirName  : '{$sNotifDirName}'");

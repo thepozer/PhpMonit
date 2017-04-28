@@ -40,7 +40,7 @@ class CheckPort {
                 }
             }
             
-debug(__METHOD__ . " - Port {$iPort} - Status : {$sPortStatus}");
+//debug(__METHOD__ . " - Port {$iPort} - Status : {$sPortStatus}");
             $arRet['human'] .= "<li>{$sPortStatus}</li>\n";
         }
         $arRet['human'] .= "</ul>\n";
