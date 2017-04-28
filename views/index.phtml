@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-6 col-xs-12">
+    <div class="col-md-4 col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="head-notif">
                 <a role="button" data-toggle="collapse" href="#bloc-notif" aria-expanded="false" aria-controls="bloc-notif">
@@ -15,27 +15,32 @@
             </ul>
         </div>
     </div>
+    <div class="col-md-8 col-sm-12">
+        <div class="row">
 <?php foreach($this->arStatus as $sHostName => $arHostStatus) : 
     $sHtmlName = strtr($sHostName, ['.' => '-']);
     if ($sHostName !== '#General') : ?>
-    <div class="col-sm-6 col-xs-12">
-       <div class="panel <?= ($arHostStatus['#status'] === 'OK') ? 'panel-success' : 'panel-danger' ?>">
-            <div class="panel-heading" role="tab" id="head-<?= $sHtmlName ?>">
-                <a role="button" data-toggle="collapse" href="#bloc-<?= $sHtmlName ?>" aria-expanded="<?= ($arHostStatus['#status'] === 'OK') ? 'false' : 'true' ?>" aria-controls="bloc-<?= $sHtmlName ?>">
-                    Machine : <?= $sHostName ?>
-                </a>
-            </div>
-            <ul class="list-group collapse <?= ($arHostStatus['#status'] === 'OK') ? '' : 'in' ?>" id="bloc-<?= $sHtmlName ?>">
+            <div class="col-md-6 col-sm-12">
+                <div class="panel <?= ($arHostStatus['#status'] === 'OK') ? 'panel-success' : 'panel-danger' ?>">
+                    <div class="panel-heading" role="tab" id="head-<?= $sHtmlName ?>">
+                        <a role="button" data-toggle="collapse" href="#bloc-<?= $sHtmlName ?>" aria-expanded="<?= ($arHostStatus['#status'] === 'OK') ? 'false' : 'true' ?>" aria-controls="bloc-<?= $sHtmlName ?>">
+                            Machine : <?= $sHostName ?>
+                        </a>
+                    </div>
+                    <ul class="list-group collapse <?= ($arHostStatus['#status'] === 'OK') ? '' : 'in' ?>" id="bloc-<?= $sHtmlName ?>">
 <?php foreach($arHostStatus as $sService => $arService): 
     if ($sService !== '#status'): ?>
-                <li class="list-group-item <?= ($arService['status'] === 'OK') ? 'list-group-item-success' : ' list-group-item-danger' ?>">
-                    <?= $sService ?> : <?= $arService['status'] ?> (<?= $arService['value'] ?>) - <?= $arService['human'] ?>
-                </li>
+                        <li class="list-group-item <?= ($arService['status'] === 'OK') ? 'list-group-item-success' : ' list-group-item-danger' ?>">
+                            <?= $sService ?> : <?= $arService['status'] ?> (<?= $arService['value'] ?>) <br /> 
+                            <?= $arService['human'] ?>
+                        </li>
 <?php endif; endforeach; ?>
-            </ul>
+                    </ul>
+                </div>
+            </div>
+<?php endif; endforeach; ?>
         </div>
     </div>
-<?php endif; endforeach; ?>
 </div>
 <p class="text-center">
     Date de la vérification : <?= $this->arStatus['#General']['date'] ?><br />
