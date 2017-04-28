@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4eaa9a29b83467007753b88d8917a53e",
+    "content-hash": "7996d95853b9e525acf2ed58d8b7dae7",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -451,6 +451,81 @@
                 "router"
             ],
             "time": "2016-12-20T20:30:47+00:00"
+        },
+        {
+            "name": "thepozer/simple-log",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thepozer/simple-log.git",
+                "reference": "e1ad365fc490d84067e0e315de31c03d99123b44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thepozer/simple-log/zipball/e1ad365fc490d84067e0e315de31c03d99123b44",
+                "reference": "e1ad365fc490d84067e0e315de31c03d99123b44",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Thepozer\\Log\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Didier Prolhac",
+                    "email": "dev@thepozer.net",
+                    "homepage": "http://www.thepozer.net/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple dated log system to use with Slim FrameWork v3",
+            "homepage": "https://github.com/thepozer/simple-log",
+            "time": "2017-04-27T13:20:31+00:00"
+        },
+        {
+            "name": "thepozer/simple-view",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thepozer/simple-view.git",
+                "reference": "d97be59d1238eec734899f496a6c942d01ab968d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thepozer/simple-view/zipball/d97be59d1238eec734899f496a6c942d01ab968d",
+                "reference": "d97be59d1238eec734899f496a6c942d01ab968d",
+                "shasum": ""
+            },
+            "require": {
+                "psr/http-message": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Thepozer\\View\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Didier Prolhac",
+                    "email": "dev@thepozer.net",
+                    "homepage": "http://www.thepozer.net/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple view system to use with Slim FrameWork v3",
+            "homepage": "https://github.com/thepozer/simple-view",
+            "time": "2017-04-27T13:28:36+00:00"
         }
     ],
     "packages-dev": [],

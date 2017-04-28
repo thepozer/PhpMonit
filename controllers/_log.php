@@ -2,7 +2,7 @@
 
 // ***** Fonctions de logs
 $sFilePart = date('Y-m-d');
-use \Tools\Log\LogDateWriter as LogDateWriter;
+use \Thepozer\Log\SimpleLog as LogDateWriter;
 $oLog = new LogDateWriter(fopen('logs/application-' . $sFilePart . '.log', 'a+'), LogDateWriter::ERROR);
 
 if ($bDevMode) {

@@ -15,7 +15,7 @@ $oContainer = new \Slim\Container();
 
 // Register component on container
 $oContainer['view'] = function ($c) {
-    return new \Tools\View\SimpleView('views/');
+    return new \Thepozer\View\SimpleView('views/');
 };
 $oContainer['log'] = $oLog;
 $oContainer['arServers'] = $arServers;
