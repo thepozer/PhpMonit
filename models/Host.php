@@ -28,9 +28,12 @@ class Host {
     public static function getInstance($sName, $arServer) {
         $oHost = null;
 
-        if ($arServer['type'] === 'HostUnix') {
-            $oHost = new HostUnix($arServer['host']);
+        try {
+            $oHost = new $arServer['type']($arServer['host']);
             $oHost->setSshAuthInfo($arServer['ssh']['login'],$arServer['ssh']['private_key'],$arServer['ssh']['public_key']);
+        } catch (Exception $e) {
+            error(__METHOD__ . " - Mauvais type de machine : {$arServer['type']}");
+            return null;
         }
         
         return $oHost;

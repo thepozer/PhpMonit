@@ -6,4 +6,5 @@
 
 $bDevMode = true;
 
-require_once 'data/servers.php';
+$arServers = [];
+include_once 'data/servers.php';
