@@ -1,6 +1,7 @@
 <?php
+namespace Check;
 
-class CheckMem {
+class Mem {
     private $arParams = ['mem_minimal' => '10', 'swap_minimal' => '90'];
 
     public function __construct($arParams = null) {

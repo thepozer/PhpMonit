@@ -1,6 +1,7 @@
 <?php
+namespace Check;
 
-class CheckProcess {
+class Process {
     private $arParams = ['params' => ['ErrorOnZombie' => true], 'process' => []];
 
     public function __construct($arParams = null) {

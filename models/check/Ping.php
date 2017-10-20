@@ -1,6 +1,7 @@
 <?php
+namespace Check;
 
-class CheckPing {
+class Ping {
     private $arParams = ['max' => 1];
 
     public function __construct($arParams = null) {

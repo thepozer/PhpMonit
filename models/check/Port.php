@@ -1,6 +1,7 @@
 <?php
+namespace Check;
 
-class CheckPort {
+class Port {
     private $arParams = ['list' => [22, 80], 'needed' => [], 'forbidden' => [7, 23]];
 
     public function __construct($arParams = null) {

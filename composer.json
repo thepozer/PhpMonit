@@ -1,6 +1,6 @@
 {
-    "name": "thepozer/base-slim",
-    "description": "My skeleton for slim framework v3 web site/service",
+    "name": "thepozer/PhpMonit",
+    "description": "Small Monitoring system <riten in PHP",
     "type": "project",
     "require": {
         "slim/slim": "~3.0",
@@ -11,7 +11,7 @@
     },
     "autoload": {
         "psr-4": {
-			"Tools\\": "models/tools/",
+			"Check\\": "models/check/",
 			"": "models/"
 		}
     },

@@ -1,6 +1,7 @@
 <?php
+namespace Check;
 
-class CheckDisk {
+class Disk {
     private $arParams = ['minimal' => 10];
 
     public function __construct($arParams = null) {

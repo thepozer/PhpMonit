@@ -1,6 +1,7 @@
 <?php
+namespace Check;
 
-class CheckLoad {
+class Load {
     private $arParams = ['maximal' => [1, 1, 1]];
 
     public function __construct($arParams = null) {

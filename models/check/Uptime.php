@@ -1,6 +1,7 @@
 <?php
+namespace Check;
 
-class CheckUptime {
+class Uptime {
     private $arParams = ['minimal' => 3600];
 
     public function __construct($arParams = null) {
@@ -29,9 +30,9 @@ class CheckUptime {
             $iDelta = intval($arTime[0]);
 
             //debug(__METHOD__ . " - PT{$iDelta}S");
-            $d1 = new DateTime();
-            $d2 = new DateTime();
-            $d2->add(new DateInterval('PT'.$iDelta.'S'));
+            $d1 = new \DateTime();
+            $d2 = new \DateTime();
+            $d2->add(new \DateInterval('PT'.$iDelta.'S'));
             $oDate = $d2->diff($d1);
             //debug(__METHOD__ . " - oDate : " . print_r($oDate, true));
 

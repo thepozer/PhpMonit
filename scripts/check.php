@@ -20,7 +20,7 @@ foreach($arServers as $sHostName => $arServer) {
     $arResults[$sHostName] = ['#status' => 'OK'];
     
     
-    $oCheck = new CheckPing();
+    $oCheck = new \Check\Ping();
     $arRet = $oCheck->check($oHost, []);
     $arResults[$sHostName] = array_merge($arResults[$sHostName], $arRet);
     $arService = $arRet['ping'];
@@ -36,7 +36,7 @@ foreach($arServers as $sHostName => $arServer) {
     } else {
         foreach($arServer['services'] as $sServiceName => $arParams) {
             try {
-                $sCheckName = 'Check' . ucfirst($sServiceName);
+                $sCheckName = "\\Check\\" . ucfirst($sServiceName);
                 $oCheck = new $sCheckName();
                 $arRet = $oCheck->check($oHost, $arParams);
                 

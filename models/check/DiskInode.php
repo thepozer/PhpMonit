@@ -1,6 +1,7 @@
 <?php
+namespace Check;
 
-class CheckDiskInode {
+class DiskInode {
     private $arParams = ['minimal' => 10];
 
     public function __construct($arParams = null) {
