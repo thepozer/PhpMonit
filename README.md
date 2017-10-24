@@ -24,7 +24,7 @@ Prepare configuration : `cp data/server.php.sample data/server.php`
 
 Edit Configuration : `vim data/server.php`
 
-Add `script/check.php` in crontab (start it each 5 mins)
+Add `script/test_all.php` in crontab (start it each 5 mins)
 
 ## Configuration 
 
@@ -65,7 +65,6 @@ $arServers = [
 
 ## TODO
 
- * Adding Windows host using protocol winRM
  * Adapting checks for Windows hosts (already looking for that ... ;) )
  * Adding some other checks 
  * Adding an interface to manage servers' list
