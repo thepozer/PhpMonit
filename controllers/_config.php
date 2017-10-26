@@ -6,5 +6,7 @@
 
 $bDevMode = true;
 
+$arNotifs  = ['emails' => [], 'urls' => []];
 $arServers = [];
-include_once 'data/servers.php';
+
+include_once 'data/config.php';

@@ -2,15 +2,34 @@
 
 class TestCheck {
     private $arServers = [];
+    private $arNotifs  = [];
+    
     private $arDirs = [];
     private $iCurrTime = 0;
+    private $sHostname = null;
     
-    public function __construct($arServers) {
+    public function __construct($arServers, $arNotifs, $iCurrTime = 0, $sHostname = null) {
         $this->arServers = $arServers;
+        $this->arNotifs  = $arNotifs;
+        
+        if ($iCurrTime > 0 && $sHostname) {
+            $this->initCurrentTime($iCurrTime);
+            $this->sHostname = $sHostname;
+        }
     }
     
-    public function genCurrentTime() {
-        $this->iCurrTime = time();
+    public function run() {
+        if ($this->iCurrTime > 0 && $this->sHostname) {
+            $this->doChecksOneServer($this->sHostname);
+        }
+    }
+    
+    /**
+     * Prépare les répertoires par rapport à la date de début des tests
+     */
+    public function initCurrentTime($iCurrTime = 0) {
+        $this->iCurrTime = ($iCurrTime > 0) ? $iCurrTime : time();
+        
         $this->arDirs['check_name'] = 'data/status/' . date('Y', $this->iCurrTime) . '/' . date('m', $this->iCurrTime) . '/' . date('d', $this->iCurrTime) . '/' . date('H', $this->iCurrTime);
         $this->arDirs['check_current_name'] = $this->arDirs['check_name'] . '/' . date('Y-m-d-Hi', $this->iCurrTime);
         $this->arDirs['notif_name'] = 'data/notifs/' . date('Y', $this->iCurrTime);
@@ -29,65 +48,79 @@ class TestCheck {
     }
     
     /** 
-     *  Générations des résultats par hosts 
+     * Générations des résultats pour tous les hosts 
      */
     public function doAllChecks() {
-        foreach($this->arServers as $sHostName => $arServer) {
-            $sCheckCurrentFileName = $this->arDirs['check_current_name'] . '/status-' . $sHostName . '.json';
-            $sNotifCurrentFileName = $this->arDirs['check_current_name'] . '/notif-' . $sHostName . '.json';
-            debug("Looking for {$sHostName}");
+        foreach(array_keys($this->arServers) as $sHostName) {
+            $this->doChecksOneServer($sHostName);
+        }
+    }
+    
+    /** 
+     * Générations des résultats pour un seul host
+     */
+    public function doChecksOneServer($sHostName) {
+        if (!array_key_exists($sHostName, $this->arServers)) {
+            throw new Exception('Hostname not in servers list');
+        }
+        
+        $arServer = $this->arServers[$sHostName];
 
-            $oHost = Host::getInstance($sHostName, $arServer);
-            $arLocalResult = ['#hostname' => $sHostName, '#status' => 'OK'];
-            $arNotifications = [];
+        $sCheckCurrentFileName = $this->arDirs['check_current_name'] . '/status-' . $sHostName . '.json';
+        $sNotifCurrentFileName = $this->arDirs['check_current_name'] . '/notif-' . $sHostName . '.json';
+        debug("Looking for {$sHostName}");
 
-            $oCheck = new \Check\Ping();
-            $arRet = $oCheck->check($oHost, []);
-            $arLocalResult = array_merge($arLocalResult, $arRet);
-            $arService = $arRet['ping'];
+        $oHost = Host::getInstance($sHostName, $arServer);
+        $arLocalResult = ['#hostname' => $sHostName, '#status' => 'OK'];
+        $arNotifications = [];
 
-            if ($arService['status'] === 'KO') {
-                $arLocalResult['#status'] = 'KO' ;
+        $oCheck = new \Check\Ping();
+        $arRet = $oCheck->check($oHost, []);
+        $arLocalResult = array_merge($arLocalResult, $arRet);
+        $arService = $arRet['ping'];
 
-                $arNotif = $arService;
-                $arNotif['name'] = 'Ping';
-                $arNotif['date'] = date('Y-m-d H:i:s', $this->iCurrTime);
-                $arNotif['host'] = $arServer['host'];
-                $arNotifications[] = $arNotif;
-            } else {
-                foreach($arServer['services'] as $sServiceName => $arParams) {
-                    try {
-                        $sCheckName = "\\Check\\" . ucfirst($sServiceName);
-                        $oCheck = new $sCheckName();
-                        $arRet = $oCheck->check($oHost, $arParams);
+        if ($arService['status'] === 'KO') {
+            $arLocalResult['#status'] = 'KO' ;
 
-                        $arLocalResult = array_merge($arLocalResult, $arRet);
+            $arNotif = $arService;
+            $arNotif['name'] = 'Ping';
+            $arNotif['date'] = date('Y-m-d H:i:s', $this->iCurrTime);
+            $arNotif['host'] = $arServer['host'];
+            $arNotifications[] = $arNotif;
+        } else {
+            foreach($arServer['services'] as $sServiceName => $arParams) {
+                try {
+                    $sCheckName = "\\Check\\" . ucfirst($sServiceName);
+                    $oCheck = new $sCheckName();
+                    $arRet = $oCheck->check($oHost, $arParams);
 
-                        foreach($arRet as $arService) {
-                            if ($arService['status'] === 'KO') {
-                                $arLocalResult['#status'] = 'KO' ;
+                    $arLocalResult = array_merge($arLocalResult, $arRet);
 
-                                $arNotif = $arService;
-                                $arNotif['name'] = $sServiceName;
-                                $arNotif['date'] = date('Y-m-d H:i:s', $this->iCurrTime);
-                                $arNotif['host'] = $arServer['host'];
-                                $arNotifications[] = $arNotif;
-                            }
+                    foreach($arRet as $arService) {
+                        if ($arService['status'] === 'KO') {
+                            $arLocalResult['#status'] = 'KO' ;
 
+                            $arNotif = $arService;
+                            $arNotif['name'] = $sServiceName;
+                            $arNotif['date'] = date('Y-m-d H:i:s', $this->iCurrTime);
+                            $arNotif['host'] = $arServer['host'];
+                            $arNotifications[] = $arNotif;
                         }
-                    } catch (Exception $e) {
-                        error("Exception : $e");
+
                     }
+                } catch (Exception $e) {
+                    error("Exception : $e");
                 }
             }
-
-            $sJsonLocalData = json_encode($arLocalResult);
-            file_put_contents($sCheckCurrentFileName, $sJsonLocalData);
-            if (count($arNotifications) > 0) {
-                $sJsonLocalNotif = json_encode($arNotifications);
-                file_put_contents($sNotifCurrentFileName, $sJsonLocalNotif);
-            }
         }
+
+        $sJsonLocalData = json_encode($arLocalResult);
+        file_put_contents($sCheckCurrentFileName, $sJsonLocalData);
+        if (count($arNotifications) > 0) {
+            $sJsonLocalNotif = json_encode($arNotifications);
+            file_put_contents($sNotifCurrentFileName, $sJsonLocalNotif);
+        }
+
     }
     
     /**
@@ -140,6 +173,9 @@ class TestCheck {
         //debug("check.php : Full Notifications After  : " . print_r($arFullNotifications, true));
             file_put_contents($sNotifFileName, json_encode($arFullNotifications));
             file_put_contents('data/notifs.json', json_encode($arFullNotifications));
+            
+            $oNotifs = new Notifications($this->arNotifs);
+            $oNotifs->sendAllNotifs($arNotifications);
         }
     }
 }
